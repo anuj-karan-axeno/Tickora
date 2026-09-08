@@ -1,0 +1,55 @@
+@use '../abstract/variables' as *;
+@use '../abstract/mixins' as *;
+
+.kanban-board {
+    display: flex;
+    gap: $space-6;
+    padding: $space-6;
+    height: calc(100vh - 72px); // Assuming header is 72px
+    overflow-x: auto;
+    background-color: $color-3;
+}
+
+.kanban-column {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    background-color: transparent;
+    border: 2px solid $border-color-1;
+    border-radius: $radius-lg;
+    overflow: hidden;
+
+    &__header {
+        padding: $space-4;
+        font-weight: 600;
+        text-align: center;
+        border-bottom: 2px solid $border-color-1;
+        background-color: $secondary-color;
+        color: $neutral-color;
+    }
+
+    &__body {
+        flex: 1;
+        padding: $space-4;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: $space-4;
+    }
+
+    &--todo {
+        border-color: #4a90e2;
+        .kanban-column__header { border-bottom-color: #4a90e2; }
+    }
+
+    &--in-progress {
+        border-color: #f5a623;
+        .kanban-column__header { border-bottom-color: #f5a623; }
+    }
+
+    &--done {
+        border-color: #7ed321;
+        .kanban-column__header { border-bottom-color: #7ed321; }
+    }
+}

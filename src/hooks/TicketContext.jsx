@@ -17,7 +17,7 @@ export const TicketContextProvider = ({ children }) => {
 
             const { data, error } = await supabase
                 .from('tickets')
-                .select('*')
+                .select('*, created_by(full_name), assigned_to(full_name)')
                 .order('created_at', { ascending: false });
 
             if (error) {
@@ -49,7 +49,7 @@ export const TicketContextProvider = ({ children }) => {
                     assigned_to: formData.assigned_to,
                     created_by: userData?.id || null,
                 })
-                .select()
+                .select('*, created_by(full_name), assigned_to(full_name)')
                 .single();
 
             if (error) {
@@ -75,10 +75,11 @@ export const TicketContextProvider = ({ children }) => {
                 .from('tickets')
                 .update(updates)
                 .eq('id', ticketId)
-                .select()
+                .select('*, created_by(full_name), assigned_to(full_name)')
                 .single();
 
             if (error) {
+                console.error("Supabase update error:", error);
                 setError(error.message);
                 return;
             }
