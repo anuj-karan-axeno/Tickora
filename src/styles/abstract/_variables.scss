@@ -1,27 +1,78 @@
 // =============================================================================
-// DESIGN TOKENS — Black / Gold theme
-// Same variable names as before, values replaced.
+// DESIGN TOKENS — Dark / Light Themes
 // =============================================================================
 
-// Core surface + accent colors
-$primary-color:   #dcc088; // gold accent — buttons, active states, focus
-$secondary-color: #1a1a1a; // card / modal / panel surface
-$tertiary-color:  #242424; // elevated surface, hover state
-$neutral-color:   #f5f1e8; // primary text (warm off-white)
+:root {
+    --primary-color: #dcc088;
+    --secondary-color: #1a1a1a;
+    --tertiary-color: #242424;
+    --neutral-color: #f5f1e8;
+    --border-color-1: rgba(220, 192, 136, 0.18);
+    --color-1: #a8a29a;
+    --color-2: #6b655c;
+    --color-3: #0a0a0a;
+    --color-4: #c0574a;
+    --color-5: #6fae7f;
+    --shadow-modal: 0 12px 32px rgba(0, 0, 0, 0.6);
+    --shadow-focus: 0 0 0 3px rgba(220, 192, 136, 0.18);
 
-// Borders
-$border-color-1: rgba(220, 192, 136, 0.18); // default hairline border
+    // Modern flat tokens
+    --surface-1: #242424;
+    --surface-hover: #2a2a2a;
+    --border-subtle: #333333;
+    --border-hover: #444444;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --text-tertiary: #7d8590;
+    --btn-border: #30363d;
+    --btn-hover: #30363d;
+    --btn-text: #c9d1d9;
+}
 
-// Supporting colors
-$color-1: #a8a29a; // secondary text
-$color-2: #6b655c; // tertiary text / muted labels
-$color-3: #0a0a0a; // app background (deepest black)
-$color-4: #c0574a; // error / escalated / critical
-$color-5: #6fae7f; // success / resolved
+[data-theme='light'] {
+    --primary-color: #b59252;
+    --secondary-color: #ffffff;
+    --tertiary-color: #f9f9f9;
+    --neutral-color: #1a1a1a;
+    --border-color-1: rgba(0, 0, 0, 0.1);
+    --color-1: #555555;
+    --color-2: #888888;
+    --color-3: #f6f8fa;
+    --color-4: #e74c3c;
+    --color-5: #2ecc71;
+    --shadow-modal: 0 12px 32px rgba(0, 0, 0, 0.1);
+    --shadow-focus: 0 0 0 3px rgba(181, 146, 82, 0.2);
+
+    // Modern flat tokens
+    --surface-1: #ffffff;
+    --surface-hover: #f3f4f6;
+    --border-subtle: #d0d7de;
+    --border-hover: #babbbd;
+    --text-primary: #1F2328;
+    --text-secondary: #656d76;
+    --text-tertiary: #57606a;
+    --btn-border: #d0d7de;
+    --btn-hover: #f3f4f6;
+    --btn-text: #24292f;
+}
+
+// Map SCSS variables to CSS variables
+$primary-color: var(--primary-color);
+$secondary-color: var(--secondary-color);
+$tertiary-color: var(--tertiary-color);
+$neutral-color: var(--neutral-color);
+$border-color-1: var(--border-color-1);
+$color-1: var(--color-1);
+$color-2: var(--color-2);
+$color-3: var(--color-3);
+$color-4: var(--color-4);
+$color-5: var(--color-5);
+$shadow-modal: var(--shadow-modal);
+$shadow-focus: var(--shadow-focus);
 
 // Extra accents used across status & priority badges
-$color-info:    #4a90c4; // open / medium priority
-$color-warning: #d4924a; // high priority
+$color-info:    #4a90c4;
+$color-warning: #d4924a;
 
 // Spacing (kept simple — 4px base)
 $space-1: 4px;

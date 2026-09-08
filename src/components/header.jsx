@@ -1,11 +1,23 @@
-import React, { useContext, useState } from 'react'
-import { Plus, Sun, CircleUserRound } from 'lucide-react'
+import React, { useContext, useState, useEffect } from 'react'
+import { Plus, Sun, Moon, CircleUserRound } from 'lucide-react'
 import { AuthContext } from '../hooks/AuthContext'
 import { CreateTicketModal } from './CreateTicketModal'
 
 export const Header = () => {
-    const { userData } = useContext(AuthContext)
+    const { userProfile, userData } = useContext(AuthContext)
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark')
+
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme)
+        localStorage.setItem('theme', theme)
+    }, [theme])
+
+    const toggleTheme = () => {
+        setTheme(prev => prev === 'dark' ? 'light' : 'dark')
+    }
+
+    const displayName = userProfile?.full_name || userData?.user_metadata?.full_name || 'User';
 
     return (
         <>
@@ -19,14 +31,14 @@ export const Header = () => {
                 </button>
 
                 <div className="topbar__actions">
-                    <button className="btn btn--ghost btn--icon-only" aria-label="Toggle theme">
-                        <Sun size={18} />
+                    <button className="btn btn--ghost btn--icon-only" onClick={toggleTheme} aria-label="Toggle theme">
+                        {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
                     </button>
 
                     <div className="user-chip">
-                        <CircleUserRound size={22} color="#dcc088" />
-                        <span className="user-chip__name">
-                            Hi, {userData?.user_metadata?.full_name?.split(' ')[0] || 'there'}
+                        <CircleUserRound size={22} color="var(--primary-color, #dcc088)" />
+                        <span className="user-chip__name" style={{ fontWeight: 600 }}>
+                            {displayName}
                         </span>
                     </div>
                 </div>

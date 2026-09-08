@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const Sidebar = ({ activeTab, setActiveTab }) => {
     const [isCollapsed, setIsCollapsed] = useState(false);
-    const { handleLogout } = useContext(AuthContext);
+    const { handleLogout, userProfile } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const onLogout = async () => {
@@ -39,13 +39,15 @@ export const Sidebar = ({ activeTab, setActiveTab }) => {
                     <span className="label">Tickets</span>
                 </button>
 
-                <button 
-                    className={`sidebar__link ${activeTab === 'add_users' ? 'sidebar__link--active' : ''}`}
-                    onClick={() => setActiveTab('add_users')}
-                >
-                    <span className="icon"><Users size={20} /></span>
-                    <span className="label">Add Users</span>
-                </button>
+                {userProfile?.role === 'admin' && (
+                    <button 
+                        className={`sidebar__link ${activeTab === 'users' ? 'sidebar__link--active' : ''}`}
+                        onClick={() => setActiveTab('users')}
+                    >
+                        <span className="icon"><Users size={20} /></span>
+                        <span className="label">Users</span>
+                    </button>
+                )}
             </nav>
 
             <div className="sidebar__logout">

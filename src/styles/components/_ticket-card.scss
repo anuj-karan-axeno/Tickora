@@ -3,8 +3,8 @@
 @use '../abstract/mixins' as *;
 
 .ticket-card {
-    background-color: #242424;
-    border: 1px solid #333333;
+    background-color: var(--surface-1);
+    border: 1px solid var(--border-subtle);
     border-radius: 6px;
     padding: 12px 14px;
     display: flex;
@@ -14,8 +14,8 @@
     transition: all 0.15s ease;
 
     &:hover {
-        background-color: #2a2a2a;
-        border-color: #444444;
+        background-color: var(--surface-hover);
+        border-color: var(--border-hover);
     }
 
     &__header {
@@ -26,7 +26,7 @@
 
     &__id {
         font-size: 12px;
-        color: #8b949e;
+        color: var(--text-secondary);
         font-weight: 500;
     }
 
@@ -35,7 +35,7 @@
         align-items: center;
         gap: 6px;
         font-size: 12px;
-        color: #8b949e;
+        color: var(--text-secondary);
         
         span {
             max-width: 100px;
@@ -54,14 +54,14 @@
     &__title {
         font-size: 14px;
         font-weight: 500;
-        color: #e6edf3;
+        color: var(--text-primary);
         margin: 0;
         line-height: 1.4;
     }
 
     &__desc {
         font-size: 13px;
-        color: #7d8590;
+        color: var(--text-tertiary);
         margin: 0;
         display: -webkit-box;
         -webkit-line-clamp: 1;
@@ -82,7 +82,7 @@
         gap: 6px;
         font-size: 12px;
         font-weight: 500;
-        color: #8b949e;
+        color: var(--text-secondary);
 
         .priority-dot {
             width: 8px;
@@ -94,8 +94,8 @@
 
 .ticket-btn {
     background: transparent;
-    border: 1px solid #30363d;
-    color: #c9d1d9;
+    border: 1px solid var(--btn-border);
+    color: var(--btn-text);
     padding: 4px 10px;
     border-radius: 4px;
     font-size: 12px;
@@ -104,13 +104,13 @@
     transition: all 0.15s ease;
 
     &:hover {
-        background-color: #30363d;
-        border-color: #8b949e;
-        color: #ffffff;
+        background-color: var(--btn-hover);
+        border-color: var(--text-secondary);
+        color: var(--text-primary);
     }
 
     &--done:hover {
-        color: #2ea043;
-        border-color: #2ea043;
+        color: var(--color-5);
+        border-color: var(--color-5);
     }
 }

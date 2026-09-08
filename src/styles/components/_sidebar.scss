@@ -4,7 +4,7 @@
 
 .sidebar {
     background-color: $color-3;
-    border-right: 1px solid rgba($primary-color, 0.15);
+    border-right: 1px solid var(--border-subtle);
     height: 100vh;
     transition: width 0.3s cubic-bezier(0.2, 0, 0, 1);
     display: flex;
@@ -66,7 +66,7 @@
 
         &:hover {
             transform: scale(1.1);
-            background-color: color.adjust($primary-color, $lightness: 10%);
+            filter: brightness(1.1);
         }
     }
 
@@ -106,7 +106,7 @@
             
             &:hover {
                 color: $color-3;
-                background-color: color.adjust($primary-color, $lightness: 10%);
+                filter: brightness(1.1);
             }
         }
 

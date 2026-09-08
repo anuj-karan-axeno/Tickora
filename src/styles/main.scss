@@ -5,6 +5,7 @@
 @use './components/kanban';
 @use './components/ticket-card';
 @use './components/sidebar';
+@use './components/table';
 
 .dashboard-layout {
     display: flex;
