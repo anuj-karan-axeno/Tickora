@@ -47,7 +47,7 @@ export const TicketContextProvider = ({ children }) => {
                     priority: formData.priority,
                     department: formData.department,
                     assigned_to: formData.assigned_to,
-                    created_by: userData.id,
+                    created_by: userData?.id || null,
                 })
                 .select()
                 .single();

@@ -1,0 +1,42 @@
+// =============================================================================
+// DESIGN TOKENS — Black / Gold theme
+// Same variable names as before, values replaced.
+// =============================================================================
+
+// Core surface + accent colors
+$primary-color:   #dcc088; // gold accent — buttons, active states, focus
+$secondary-color: #1a1a1a; // card / modal / panel surface
+$tertiary-color:  #242424; // elevated surface, hover state
+$neutral-color:   #f5f1e8; // primary text (warm off-white)
+
+// Borders
+$border-color-1: rgba(220, 192, 136, 0.18); // default hairline border
+
+// Supporting colors
+$color-1: #a8a29a; // secondary text
+$color-2: #6b655c; // tertiary text / muted labels
+$color-3: #0a0a0a; // app background (deepest black)
+$color-4: #c0574a; // error / escalated / critical
+$color-5: #6fae7f; // success / resolved
+
+// Extra accents used across status & priority badges
+$color-info:    #4a90c4; // open / medium priority
+$color-warning: #d4924a; // high priority
+
+// Spacing (kept simple — 4px base)
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 20px;
+$space-6: 24px;
+$space-8: 32px;
+
+// Radius
+$radius-sm: 4px;
+$radius-md: 6px;
+$radius-lg: 10px;
+
+// Shadow
+$shadow-modal: 0 12px 32px rgba(0, 0, 0, 0.6);
+$shadow-focus: 0 0 0 3px rgba(220, 192, 136, 0.18);  

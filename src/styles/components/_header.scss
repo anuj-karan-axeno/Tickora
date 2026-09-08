@@ -1,0 +1,56 @@
+@use '../abstract/variables' as *;
+@use '../abstract/mixins' as *;
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $space-3 $space-6;
+    background-color: $secondary-color;
+    border-bottom: 1px solid $border-color-1;
+    width: 100%;
+    box-sizing: border-box;
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: $space-4;
+    }
+}
+
+.user-chip {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-1 $space-3;
+    background-color: $tertiary-color;
+    border: 1px solid $border-color-1;
+    border-radius: 9999px;
+
+    &__name {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: $neutral-color;
+    }
+}
+
+.btn--ghost {
+    background-color: transparent;
+    border: none;
+    color: $color-1;
+    cursor: pointer;
+    transition: color 0.15s ease, background-color 0.15s ease;
+
+    &:hover {
+        color: $neutral-color;
+        background-color: $tertiary-color;
+    }
+}
+
+.btn--icon-only {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: $space-2;
+    border-radius: $radius-sm;
+}
