@@ -9,7 +9,7 @@ export const UpdateTicketModal = ({ ticket, onClose }) => {
     const [description, setDescription] = useState(ticket.description || '')
     const [priority, setPriority] = useState(ticket.priority || 'medium')
     const [department, setDepartment] = useState(ticket.department || '')
-    const [assignedTo, setAssignedTo] = useState(ticket.assigned_to || '')
+    const [assignedTo, setAssignedTo] = useState(ticket.assigned_to?.id || ticket.assigned_to || '')
     const [agents, setAgents] = useState([])
 
     // Fetch assignable users for the dropdown

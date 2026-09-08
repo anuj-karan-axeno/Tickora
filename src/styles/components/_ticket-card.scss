@@ -1,43 +1,70 @@
+@use 'sass:color';
 @use '../abstract/variables' as *;
 @use '../abstract/mixins' as *;
 
 .ticket-card {
-    background-color: $secondary-color;
-    border: 1px solid $border-color-1;
-    border-radius: $radius-lg;
-    padding: $space-4;
+    background-color: #242424;
+    border: 1px solid #333333;
+    border-radius: 6px;
+    padding: 12px 14px;
     display: flex;
     flex-direction: column;
-    gap: $space-3;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    &:hover {
+        background-color: #2a2a2a;
+        border-color: #444444;
+    }
 
     &__header {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
-        gap: $space-2;
+        align-items: center;
+    }
+
+    &__id {
+        font-size: 12px;
+        color: #8b949e;
+        font-weight: 500;
+    }
+
+    &__assignee {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        color: #8b949e;
+        
+        span {
+            max-width: 100px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
     }
 
     &__title {
-        font-size: 1rem;
-        font-weight: 600;
-        color: $neutral-color;
+        font-size: 14px;
+        font-weight: 500;
+        color: #e6edf3;
         margin: 0;
-    }
-
-    &__priority {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        line-height: 1.4;
     }
 
     &__desc {
-        font-size: 0.875rem;
-        color: $color-1;
-        line-height: 1.4;
+        font-size: 13px;
+        color: #7d8590;
         margin: 0;
         display: -webkit-box;
-        -webkit-line-clamp: 3;
+        -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
@@ -45,27 +72,45 @@
     &__footer {
         display: flex;
         justify-content: space-between;
-        align-items: flex-end;
-        margin-top: auto;
+        align-items: center;
+        margin-top: 4px;
     }
 
-    &__assigned-by {
-        font-size: 0.75rem;
-        color: $color-2;
-    }
-
-    &__assignee {
+    &__priority-label {
         display: flex;
         align-items: center;
-        gap: $space-2;
-        font-size: 0.875rem;
+        gap: 6px;
+        font-size: 12px;
         font-weight: 500;
-        color: $neutral-color;
+        color: #8b949e;
+
+        .priority-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+    }
+}
+
+.ticket-btn {
+    background: transparent;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    &:hover {
+        background-color: #30363d;
+        border-color: #8b949e;
+        color: #ffffff;
     }
 
-    &__actions {
-        margin-top: $space-2;
-        padding-top: $space-3;
-        border-top: 1px solid $border-color-1;
+    &--done:hover {
+        color: #2ea043;
+        border-color: #2ea043;
     }
 }

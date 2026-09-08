@@ -1,8 +1,31 @@
+@use './abstract/variables' as *;
 @use './components/modal';
 @use './components/header';
 @use './pages/auth';
 @use './components/kanban';
 @use './components/ticket-card';
+@use './components/sidebar';
+
+.dashboard-layout {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: $color-3;
+
+    &__main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    &__content {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+}
 
 * {
     margin: 0;
@@ -12,4 +35,6 @@
 
 body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: $color-3;
+    color: $neutral-color;
 }

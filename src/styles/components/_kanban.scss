@@ -5,7 +5,7 @@
     display: flex;
     gap: $space-6;
     padding: $space-6;
-    height: calc(100vh - 72px); // Assuming header is 72px
+    height: 100%;
     overflow-x: auto;
     background-color: $color-3;
 }

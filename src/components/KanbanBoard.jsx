@@ -19,12 +19,12 @@ export const KanbanBoard = () => {
     if (ticketData) {
         ticketData.forEach(ticket => {
             const status = ticket.status?.toLowerCase();
-            if (status === 'in-progress' || status === 'escalated') {
+            if (status === 'in-progress') {
                 columns.inProgress.tickets.push(ticket);
-            } else if (status === 'resolved' || status === 'closed') {
+            } else if (status === 'closed') {
                 columns.done.tickets.push(ticket);
             } else {
-                // Default fallback (e.g. 'open')
+                // Default fallback ('open')
                 columns.todo.tickets.push(ticket);
             }
         });
