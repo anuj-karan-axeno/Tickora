@@ -5,14 +5,20 @@ import viteLogo from "./assets/vite.svg";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "./page/Login";
 import { AuthContextProvider } from "./hooks/AuthContext";
+import { Header } from "./components/header";
+import Dashboard from "./page/Dashboard";
+import { TicketContextProvider } from "./hooks/TicketContext";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthContextProvider>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-        </Routes>
+        <TicketContextProvider>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
+        </TicketContextProvider>
       </AuthContextProvider>
     </BrowserRouter>
   );
