@@ -1,18 +1,19 @@
 import { createContext, useEffect, useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
 import { supabase } from '../utils/supabase'
-
+import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
     const [userData, setUserData] = useState(null);
-    const [authLoading, setAuthLoading] = useState(true);
-    const [loading, setLoading] = useState(true)
+    const [authLoading, setAuthLoading] = useState(false);
+    const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getSession = async () => {
-
             const { data, error } = await supabase.auth.getSession();
 
             if (error) {
@@ -46,8 +47,8 @@ export const AuthContextProvider = ({ children }) => {
             setLoading(true);
 
             const { data, error } = await supabase.auth.signInWithPassword({
-                email: loginFormData.email,
-                password: loginFormData.password,
+                email: formData.email,
+                password: formData.password,
             });
 
             if (error) {
@@ -58,10 +59,7 @@ export const AuthContextProvider = ({ children }) => {
 
             if (data.user) {
                 setUserData(data.user);
-
-                alert("Login successfully");
                 navigate('/dashboard')
-
             }
 
         } catch (err) {
@@ -70,6 +68,7 @@ export const AuthContextProvider = ({ children }) => {
             setLoading(false);
         }
     }
+
     return (
         <AuthContext.Provider
             value={{
@@ -77,9 +76,9 @@ export const AuthContextProvider = ({ children }) => {
                 setUserData,
                 authLoading,
                 handleLogout,
+                loginUser,
                 loading,
                 error,
-
             }}
         >
             {children}
