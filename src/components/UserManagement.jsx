@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { Trash2 } from 'lucide-react';
 import { supabase } from '../utils/supabase';
+import { AuthContext } from '../hooks/AuthContext';
+import { TicketContext } from '../hooks/TicketContext';
 import { AddUser } from './AddUser';
 
 const EditUserModal = ({ user, onClose, onRefresh }) => {
@@ -70,6 +73,7 @@ const EditUserModal = ({ user, onClose, onRefresh }) => {
                         >
                             <option value="admin">Admin</option>
                             <option value="manager">Manager</option>
+                            <option value="agent">Agent</option>
                             <option value="member">Member</option>
                         </select>
                     </div>
@@ -87,10 +91,16 @@ const EditUserModal = ({ user, onClose, onRefresh }) => {
 };
 
 export const UserManagement = () => {
+    const { userData } = useContext(AuthContext);
+    const { fetchTickets } = useContext(TicketContext);
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showAddUser, setShowAddUser] = useState(false);
     const [editingUser, setEditingUser] = useState(null);
+    const [updateLoading, setUpdateLoading] = useState(null);
+    const [deleteLoading, setDeleteLoading] = useState(null);
+
+    const currentUserId = userData?.id;
 
     const fetchUsers = async () => {
         setLoading(true);
@@ -111,6 +121,77 @@ export const UserManagement = () => {
         fetchUsers();
     }, []);
 
+    const handleRoleChange = async (userId, newRole) => {
+        setUpdateLoading(userId);
+        const { error } = await supabase
+            .from('profiles')
+            .update({ role: newRole })
+            .eq('id', userId);
+
+        if (error) {
+            console.error("Error updating role:", error);
+            alert("Error updating role: " + error.message);
+        } else {
+            setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole } : u));
+        }
+        setUpdateLoading(null);
+    };
+
+    const handleDeleteUser = async (user) => {
+        if (user.id === currentUserId) {
+            alert("You cannot delete your own account.");
+            return;
+        }
+
+        const confirmDelete = window.confirm(
+            `Are you sure you want to delete user "${user.full_name || user.email}"? This user will be permanently deleted from Supabase Auth, and any tickets assigned to them will be unassigned.`
+        );
+        if (!confirmDelete) return;
+
+        setDeleteLoading(user.id);
+        try {
+            // 1. Unassign tickets assigned to this user
+            await supabase
+                .from('tickets')
+                .update({ assigned_to: null })
+                .eq('assigned_to', user.id);
+
+            // 2. Set created_by to null
+            await supabase
+                .from('tickets')
+                .update({ created_by: null })
+                .eq('created_by', user.id);
+
+            // 3. Delete from Supabase Auth via RPC
+            const { error: rpcError } = await supabase.rpc('delete_user_by_admin', {
+                target_user_id: user.id
+            });
+
+            // 4. If RPC function is not yet installed in Supabase or fails, delete from profiles table
+            if (rpcError) {
+                console.warn("RPC delete_user_by_admin fallback:", rpcError.message);
+                const { error: profileDeleteError } = await supabase
+                    .from('profiles')
+                    .delete()
+                    .eq('id', user.id);
+
+                if (profileDeleteError) {
+                    throw profileDeleteError;
+                }
+            }
+
+            setUsers(prev => prev.filter(u => u.id !== user.id));
+            if (fetchTickets) {
+                fetchTickets();
+            }
+        } catch (err) {
+            console.error("Unexpected error deleting user:", err);
+            alert("Unexpected error: " + err.message);
+        } finally {
+            setDeleteLoading(null);
+        }
+    };
+
     if (showAddUser) {
         return (
             <div className="user-management">
@@ -120,7 +201,7 @@ export const UserManagement = () => {
                 >
                     ← Back to Users
                 </button>
-                <AddUser />
+                <AddUser onUserAdded={fetchUsers} />
             </div>
         );
     }
@@ -157,8 +238,8 @@ export const UserManagement = () => {
                                         <select
                                             className="select"
                                             value={user.role}
-                                            onChange={(e) => updateRole(user.id, e.target.value)}
-                                            disabled={updateLoading === user.id}
+                                            onChange={(e) => handleRoleChange(user.id, e.target.value)}
+                                            disabled={updateLoading === user.id || user.id === currentUserId}
                                         >
                                             <option value="admin">Admin</option>
                                             <option value="manager">Manager</option>
@@ -167,13 +248,24 @@ export const UserManagement = () => {
                                         </select>
                                     </td>
                                     <td>
-                                        <button
-                                            className="btn btn--ghost"
-                                            onClick={() => handleDeleteUser(user.id)}
-                                            disabled={deleteLoading === user.id}
-                                        >
-                                            <Trash2 size={16} />
-                                        </button>
+                                        <div className="data-table__actions">
+                                            <button
+                                                className="btn btn--ghost"
+                                                onClick={() => setEditingUser(user)}
+                                                title="Edit user details"
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                className="btn btn--ghost btn--danger"
+                                                onClick={() => handleDeleteUser(user)}
+                                                disabled={deleteLoading === user.id || user.id === currentUserId}
+                                                title={user.id === currentUserId ? "You cannot delete your own account" : "Delete user"}
+                                            >
+                                                <Trash2 size={15} />
+                                                {deleteLoading === user.id ? 'Deleting...' : 'Delete'}
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}

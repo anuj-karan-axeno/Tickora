@@ -67,6 +67,12 @@
         color: $color-1;
     }
 
+    &__required {
+        color: #e74c3c;
+        margin-left: 3px;
+        font-weight: 700;
+    }
+
     &__error {
         font-size: 0.75rem;
         color: $color-4;

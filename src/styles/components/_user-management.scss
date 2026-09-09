@@ -29,6 +29,34 @@
     }
 }
 
+.password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .input {
+        padding-right: 40px;
+    }
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+
+    &:hover {
+        color: var(--text-primary);
+    }
+}
+
 .form-message {
     font-size: 0.875rem;
     margin-bottom: 16px;

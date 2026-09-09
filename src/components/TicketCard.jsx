@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { CircleUserRound } from 'lucide-react';
+import { CircleUserRound, Trash2 } from 'lucide-react';
 import { TicketContext } from '../hooks/TicketContext';
+import { AuthContext } from '../hooks/AuthContext';
 import { UpdateTicketModal } from './UpdateTicketModal';
 
 const PriorityLabel = ({ priority }) => {
@@ -15,15 +16,32 @@ const PriorityLabel = ({ priority }) => {
 };
 
 export const TicketCard = ({ ticket }) => {
-    const { updateTicket } = useContext(TicketContext);
+    const { updateTicket, deleteTicket } = useContext(TicketContext);
+    const { userProfile } = useContext(AuthContext);
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
+    const isAdmin = userProfile?.role === 'admin';
     const assigneeName = ticket.assignee?.full_name || ticket.assigned_to?.full_name || 'Unassigned';
     const ticketIdStr = ticket.id ? ticket.id.substring(0, 5).toUpperCase() : 'NEW';
 
     const handleStatusChange = (e, newStatus) => {
         e.stopPropagation();
         updateTicket(ticket.id, { status: newStatus });
+    };
+
+    const handleDelete = async (e) => {
+        e.stopPropagation();
+        if (!isAdmin) return;
+
+        const confirmDelete = window.confirm(`Are you sure you want to delete ticket "TKT-${ticketIdStr}"?`);
+        if (!confirmDelete) return;
+
+        try {
+            await deleteTicket(ticket.id);
+        } catch (err) {
+            console.error("Error deleting ticket:", err);
+            alert("Error deleting ticket: " + (err.message || err));
+        }
     };
 
     return (
@@ -43,9 +61,21 @@ export const TicketCard = ({ ticket }) => {
                 )}
                 <div className="ticket-card__header">
                     <span className="ticket-card__id">TKT-{ticketIdStr}</span>
-                    <div className="ticket-card__assignee" title={`Assigned to: ${assigneeName}`}>
-                        <CircleUserRound size={14} strokeWidth={2} />
-                        <span>{assigneeName}</span>
+                    <div className="ticket-card__header-right">
+                        <div className="ticket-card__assignee" title={`Assigned to: ${assigneeName}`}>
+                            <CircleUserRound size={14} strokeWidth={2} />
+                            <span>{assigneeName}</span>
+                        </div>
+                        {isAdmin && (
+                            <button
+                                className="ticket-card__delete-btn"
+                                onClick={handleDelete}
+                                title="Delete ticket"
+                                aria-label="Delete ticket"
+                            >
+                                <Trash2 size={13} />
+                            </button>
+                        )}
                     </div>
                 </div>
                 

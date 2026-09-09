@@ -16,6 +16,7 @@ export const CreateTicketModal = ({ onClose }) => {
     const [storyTypeId, setStoryTypeId] = useState('')
     const [agents, setAgents] = useState([])
     const [storyTypes, setStoryTypes] = useState([])
+    const [validationError, setValidationError] = useState('')
 
     // Fetch assignable users and story types
     useEffect(() => {
@@ -42,14 +43,45 @@ export const CreateTicketModal = ({ onClose }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setValidationError('')
+
+        if (!title.trim()) {
+            setValidationError('Title is required.')
+            return
+        }
+
+        if (!description.trim()) {
+            setValidationError('Description is required.')
+            return
+        }
+
+        if (!priority) {
+            setValidationError('Please select a priority.')
+            return
+        }
+
+        if (!department.trim()) {
+            setValidationError('Department is required.')
+            return
+        }
+
+        if (!storyTypeId) {
+            setValidationError('Please select a Story Type.')
+            return
+        }
+
+        if (!assignedTo) {
+            setValidationError('Please select an Assignee.')
+            return
+        }
 
         await createTicket({
-            title,
-            description,
+            title: title.trim(),
+            description: description.trim(),
             priority,
-            department,
-            assigned_to: assignedTo || null,
-            story_type_id: storyTypeId || null
+            department: department.trim(),
+            assigned_to: assignedTo,
+            story_type_id: storyTypeId
         })
 
         onClose()
@@ -66,34 +98,44 @@ export const CreateTicketModal = ({ onClose }) => {
                 <form onSubmit={handleSubmit}>
                     <div className="ticket-modal__body">
                         <div className="field">
-                            <label className="field__label" htmlFor="title">Title</label>
+                            <label className="field__label" htmlFor="title">
+                                Title <span className="field__required">*</span>
+                            </label>
                             <input
                                 id="title"
                                 type="text"
                                 className="input"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
+                                placeholder="Enter ticket title"
                                 required
                             />
                         </div>
 
                         <div className="field">
-                            <label className="field__label" htmlFor="description">Description</label>
+                            <label className="field__label" htmlFor="description">
+                                Description <span className="field__required">*</span>
+                            </label>
                             <textarea
                                 id="description"
                                 className="textarea"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
+                                placeholder="Provide detailed description of the task..."
+                                required
                             />
                         </div>
 
                         <div className="field">
-                            <label className="field__label" htmlFor="priority">Priority</label>
+                            <label className="field__label" htmlFor="priority">
+                                Priority <span className="field__required">*</span>
+                            </label>
                             <select
                                 id="priority"
                                 className="select"
                                 value={priority}
                                 onChange={(e) => setPriority(e.target.value)}
+                                required
                             >
                                 <option value="low">Low</option>
                                 <option value="medium">Medium</option>
@@ -103,25 +145,32 @@ export const CreateTicketModal = ({ onClose }) => {
                         </div>
 
                         <div className="field">
-                            <label className="field__label" htmlFor="department">Department</label>
+                            <label className="field__label" htmlFor="department">
+                                Department <span className="field__required">*</span>
+                            </label>
                             <input
                                 id="department"
                                 type="text"
                                 className="input"
                                 value={department}
                                 onChange={(e) => setDepartment(e.target.value)}
+                                placeholder="e.g. Engineering, Sales, Support"
+                                required
                             />
                         </div>
 
                         <div className="field">
-                            <label className="field__label" htmlFor="storyType">Story Type</label>
+                            <label className="field__label" htmlFor="storyType">
+                                Story Type <span className="field__required">*</span>
+                            </label>
                             <select
                                 id="storyType"
                                 className="select"
                                 value={storyTypeId}
                                 onChange={(e) => setStoryTypeId(e.target.value)}
+                                required
                             >
-                                <option value="">No type</option>
+                                <option value="" disabled>Select a story type...</option>
                                 {storyTypes.map((type) => (
                                     <option key={type.id} value={type.id}>
                                         {type.name.charAt(0).toUpperCase() + type.name.slice(1)}
@@ -131,14 +180,17 @@ export const CreateTicketModal = ({ onClose }) => {
                         </div>
 
                         <div className="field">
-                            <label className="field__label" htmlFor="assignedTo">Assign to</label>
+                            <label className="field__label" htmlFor="assignedTo">
+                                Assign to <span className="field__required">*</span>
+                            </label>
                             <select
                                 id="assignedTo"
                                 className="select"
                                 value={assignedTo}
                                 onChange={(e) => setAssignedTo(e.target.value)}
+                                required
                             >
-                                <option value="">Unassigned</option>
+                                <option value="" disabled>Select an assignee...</option>
                                 {agents.map((agent) => (
                                     <option key={agent.id} value={agent.id}>
                                         {agent.full_name}
@@ -147,6 +199,7 @@ export const CreateTicketModal = ({ onClose }) => {
                             </select>
                         </div>
 
+                        {validationError && <p className="field__error">{validationError}</p>}
                         {error && <p className="field__error">{error}</p>}
                     </div>
 

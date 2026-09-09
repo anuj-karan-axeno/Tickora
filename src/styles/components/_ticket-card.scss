@@ -14,6 +14,7 @@
     transition: all 0.15s ease;
     position: relative;
     overflow: hidden;
+    flex-shrink: 0;
 
     &:hover {
         background-color: var(--surface-hover);
@@ -40,6 +41,30 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+    }
+
+    &__header-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    &__delete-btn {
+        background: transparent;
+        border: none;
+        color: var(--text-tertiary);
+        cursor: pointer;
+        padding: 3px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.15s ease;
+
+        &:hover {
+            color: #e74c3c;
+            background-color: rgba(231, 76, 60, 0.15);
+        }
     }
 
     &__id {

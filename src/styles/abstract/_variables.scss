@@ -1,7 +1,3 @@
-// =============================================================================
-// DESIGN TOKENS — Dark / Light Themes
-// =============================================================================
-
 :root {
     --primary-color: #dcc088;
     --secondary-color: #1a1a1a;
@@ -16,7 +12,7 @@
     --shadow-modal: 0 12px 32px rgba(0, 0, 0, 0.6);
     --shadow-focus: 0 0 0 3px rgba(220, 192, 136, 0.18);
 
-    // Modern flat tokens
+
     --surface-1: #242424;
     --surface-hover: #2a2a2a;
     --border-subtle: #333333;
@@ -43,7 +39,7 @@
     --shadow-modal: 0 12px 32px rgba(0, 0, 0, 0.1);
     --shadow-focus: 0 0 0 3px rgba(181, 146, 82, 0.2);
 
-    // Modern flat tokens
+
     --surface-1: #ffffff;
     --surface-hover: #f3f4f6;
     --border-subtle: #d0d7de;
@@ -56,7 +52,7 @@
     --btn-text: #24292f;
 }
 
-// Map SCSS variables to CSS variables
+
 $primary-color: var(--primary-color);
 $secondary-color: var(--secondary-color);
 $tertiary-color: var(--tertiary-color);
@@ -70,11 +66,10 @@ $color-5: var(--color-5);
 $shadow-modal: var(--shadow-modal);
 $shadow-focus: var(--shadow-focus);
 
-// Extra accents used across status & priority badges
-$color-info:    #4a90c4;
+$color-info: #4a90c4;
 $color-warning: #d4924a;
 
-// Spacing (kept simple — 4px base)
+
 $space-1: 4px;
 $space-2: 8px;
 $space-3: 12px;
@@ -83,11 +78,9 @@ $space-5: 20px;
 $space-6: 24px;
 $space-8: 32px;
 
-// Radius
 $radius-sm: 4px;
 $radius-md: 6px;
 $radius-lg: 10px;
 
-// Shadow
 $shadow-modal: 0 12px 32px rgba(0, 0, 0, 0.6);
-$shadow-focus: 0 0 0 3px rgba(220, 192, 136, 0.18);  
+$shadow-focus: 0 0 0 3px rgba(220, 192, 136, 0.18);

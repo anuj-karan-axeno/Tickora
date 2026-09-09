@@ -1,9 +1,25 @@
 import React, { useState } from 'react';
+import { createClient } from '@supabase/supabase-js';
+import { Eye, EyeOff } from 'lucide-react';
 import { supabase } from '../utils/supabase';
 
-export const AddUser = () => {
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+// Dedicated client with persistSession: false to ensure admin session is not overwritten when signing up a new user
+const authSignUpClient = createClient(supabaseUrl, supabaseKey, {
+    auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
+    },
+});
+
+export const AddUser = ({ onUserAdded }) => {
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [department, setDepartment] = useState('');
     const [role, setRole] = useState('member');
     const [loading, setLoading] = useState(false);
@@ -16,11 +32,16 @@ export const AddUser = () => {
         setSuccessMsg('');
         setErrorMsg('');
 
-        // Create user in Supabase Auth
-        // A generic password is used since the admin is creating the account
-        const { data, error } = await supabase.auth.signUp({
+        if (!password || password.length < 6) {
+            setErrorMsg('Password must be at least 6 characters long.');
+            setLoading(false);
+            return;
+        }
+
+        // Create user in Supabase Auth with provided email and password
+        const { data, error } = await authSignUpClient.auth.signUp({
             email: email,
-            password: 'Password123!', 
+            password: password,
             options: {
                 data: {
                     full_name: fullName,
@@ -36,8 +57,8 @@ export const AddUser = () => {
             return;
         }
 
-        // Note: The profiles row is automatically created by your database trigger!
-        // We just need to manually update their role if it's not 'member' (since the trigger doesn't set role)
+        // The profiles row is automatically created by database trigger.
+        // Update role if not default 'member' using the admin's client.
         if (data?.user && role !== 'member') {
             const { error: profileError } = await supabase
                 .from('profiles')
@@ -50,11 +71,16 @@ export const AddUser = () => {
         }
 
         setLoading(false);
-        setSuccessMsg(`User ${fullName} (${email}) has been successfully added to Supabase.`);
+        setSuccessMsg(`User "${fullName}" (${email}) was successfully created! They can now log in using this email and password.`);
         setFullName('');
         setEmail('');
+        setPassword('');
         setDepartment('');
         setRole('member');
+
+        if (onUserAdded) {
+            onUserAdded();
+        }
     };
 
     return (
@@ -62,7 +88,7 @@ export const AddUser = () => {
             <div className="ticket-card add-user-card">
                 <h2 className="add-user-card__title">Add New User</h2>
                 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} autoComplete="off">
                     <div className="field">
                         <label className="field__label" htmlFor="fullName">Full Name</label>
                         <input
@@ -71,20 +97,51 @@ export const AddUser = () => {
                             className="input"
                             value={fullName}
                             onChange={(e) => setFullName(e.target.value)}
+                            autoComplete="off"
                             required
                         />
                     </div>
 
                     <div className="field">
-                        <label className="field__label" htmlFor="email">Email Address</label>
+                        <label className="field__label" htmlFor="new-user-email">Email Address</label>
                         <input
-                            id="email"
+                            id="new-user-email"
+                            name="new-user-email"
                             type="email"
                             className="input"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            placeholder="user@example.com"
+                            autoComplete="new-password"
                             required
                         />
+                    </div>
+
+                    <div className="field">
+                        <label className="field__label" htmlFor="new-user-password">Password</label>
+                        <div className="password-input-wrapper">
+                            <input
+                                id="new-user-password"
+                                name="new-user-password"
+                                type={showPassword ? "text" : "password"}
+                                className="input"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Enter password (min 6 characters)"
+                                minLength={6}
+                                autoComplete="new-password"
+                                required
+                            />
+                            <button
+                                type="button"
+                                className="password-toggle-btn"
+                                onClick={() => setShowPassword(!showPassword)}
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                                tabIndex={-1}
+                            >
+                                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                            </button>
+                        </div>
                     </div>
 
                     <div className="field">
