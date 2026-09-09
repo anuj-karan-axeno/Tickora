@@ -36,20 +36,92 @@
         display: flex;
         flex-direction: column;
         gap: $space-4;
+        background-image: radial-gradient(var(--border-hover) 1.5px, transparent 1.5px);
+        background-size: 20px 20px;
+        background-position: 0 0;
     }
 
     &--todo {
         border-color: #4a90e2;
-        .kanban-column__header { border-bottom-color: #4a90e2; }
+
+        .kanban-column__header {
+            border-bottom-color: #4a90e2;
+        }
     }
 
     &--in-progress {
         border-color: #f5a623;
-        .kanban-column__header { border-bottom-color: #f5a623; }
+
+        .kanban-column__header {
+            border-bottom-color: #f5a623;
+        }
     }
 
     &--done {
         border-color: #7ed321;
-        .kanban-column__header { border-bottom-color: #7ed321; }
+
+        .kanban-column__header {
+            border-bottom-color: #7ed321;
+        }
+    }
+}
+
+.kanban-toolbar {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    flex-wrap: wrap; // Allows wrapping on small screens
+    gap: 16px;
+    align-items: center;
+    background-color: var(--surface-1);
+
+    .search-wrapper {
+        position: relative;
+        flex: 1;
+        min-width: 200px;
+        max-width: 400px;
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .search-input {
+            padding-left: 36px;
+            width: 100%;
+            background-color: var(--color-3);
+        }
+    }
+
+    .filter-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .priority-select {
+            width: 140px;
+            background-color: var(--color-3);
+        }
+    }
+
+    @media (max-width: 768px) {
+        padding: 12px 16px;
+
+        .search-wrapper {
+            max-width: 100%; // Take full width on mobile
+        }
+
+        .filter-wrapper {
+            width: 100%; // Force filter to new row
+            justify-content: flex-end;
+
+            .priority-select {
+                flex: 1; // Stretch select on mobile
+                max-width: 200px;
+            }
+        }
     }
 }

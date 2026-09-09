@@ -31,8 +31,8 @@ export const KanbanBoard = () => {
 
     let filteredTickets = ticketData || [];
 
-    if (debouncedSearchTerm) {
-        const term = debouncedSearchTerm.toLowerCase();
+    if (debouncedSearchTerm.trim()) {
+        const term = debouncedSearchTerm.trim().toLowerCase();
         filteredTickets = filteredTickets.filter(ticket => 
             ticket.title?.toLowerCase().includes(term) || 
             ticket.description?.toLowerCase().includes(term) ||
@@ -65,31 +65,21 @@ export const KanbanBoard = () => {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
             {/* Toolbar */}
-            <div style={{ 
-                padding: '16px 24px', 
-                borderBottom: '1px solid var(--border-subtle)', 
-                display: 'flex', 
-                gap: '16px',
-                alignItems: 'center',
-                backgroundColor: 'var(--surface-1)'
-            }}>
-                <div style={{ position: 'relative', flex: 1, maxWidth: '400px' }}>
-                    <Search size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }} />
+            <div className="kanban-toolbar">
+                <div className="search-wrapper">
+                    <Search size={16} className="search-icon" />
                     <input 
                         type="text" 
                         placeholder="Search tickets by title, ID, or description..." 
-                        className="input"
-                        style={{ paddingLeft: '36px', width: '100%', backgroundColor: 'var(--color-3)' }}
+                        className="input search-input"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Filter size={16} color="var(--text-secondary)" />
+                <div className="filter-wrapper">
                     <select 
-                        className="select" 
-                        style={{ width: '140px', backgroundColor: 'var(--color-3)' }}
+                        className="select priority-select" 
                         value={priorityFilter}
                         onChange={(e) => setPriorityFilter(e.target.value)}
                     >

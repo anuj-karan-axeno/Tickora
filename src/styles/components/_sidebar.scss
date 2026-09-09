@@ -65,7 +65,7 @@
         color: var(--text-secondary);
         cursor: pointer;
         padding: 4px;
-        
+
         @media (max-width: 768px) {
             display: flex;
             align-items: center;
@@ -107,6 +107,7 @@
 
         &--desktop {
             display: flex;
+
             @media (max-width: 768px) {
                 display: none;
             }
@@ -129,7 +130,6 @@
         color: $color-1;
         text-decoration: none;
         cursor: pointer;
-        transition: color 0.2s, background-color 0.2s;
         border: none;
         background: transparent;
         width: 100%;
@@ -138,19 +138,13 @@
         font-weight: 500;
         border-radius: $radius-md;
 
-        &:hover {
-            color: $neutral-color;
-            background-color: rgba($primary-color, 0.1);
-        }
+
 
         &--active {
             background-color: $primary-color;
             color: $color-3;
-            
-            &:hover {
-                color: $color-3;
-                filter: brightness(1.1);
-            }
+
+
         }
 
         .icon {
@@ -170,9 +164,10 @@
     &__logout {
         margin-top: auto;
         padding: 0 $space-3;
-        
+
         .sidebar__link {
             color: $color-2;
+
             &:hover {
                 color: #e74c3c;
                 background-color: rgba(#e74c3c, 0.1);
