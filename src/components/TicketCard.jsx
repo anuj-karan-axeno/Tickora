@@ -22,6 +22,7 @@ export const TicketCard = ({ ticket }) => {
 
     const isAdmin = userProfile?.role === 'admin';
     const assigneeName = ticket.assignee?.full_name || ticket.assigned_to?.full_name || 'Unassigned';
+    const assignedByName = ticket.created_by?.full_name || 'Unknown';
     const ticketIdStr = ticket.id ? ticket.id.substring(0, 5).toUpperCase() : 'NEW';
 
     const handleStatusChange = (e, newStatus) => {
@@ -81,6 +82,9 @@ export const TicketCard = ({ ticket }) => {
                 
                 <div className="ticket-card__body">
                     <h3 className="ticket-card__title">{ticket.title}</h3>
+                    <div className="ticket-card__assigned-by">
+                        Assigned by: <span>{assignedByName}</span>
+                    </div>
                     {ticket.description && (
                         <p className="ticket-card__desc">{ticket.description}</p>
                     )}
