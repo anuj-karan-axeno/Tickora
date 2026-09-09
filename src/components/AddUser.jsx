@@ -6,7 +6,6 @@ import { supabase } from '../utils/supabase';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-// Dedicated client with persistSession: false to ensure admin session is not overwritten when signing up a new user
 const authSignUpClient = createClient(supabaseUrl, supabaseKey, {
     auth: {
         persistSession: false,
@@ -38,7 +37,6 @@ export const AddUser = ({ onUserAdded }) => {
             return;
         }
 
-        // Create user in Supabase Auth with provided email and password
         const { data, error } = await authSignUpClient.auth.signUp({
             email: email,
             password: password,
@@ -57,8 +55,6 @@ export const AddUser = ({ onUserAdded }) => {
             return;
         }
 
-        // The profiles row is automatically created by database trigger.
-        // Update role if not default 'member' using the admin's client.
         if (data?.user && role !== 'member') {
             const { error: profileError } = await supabase
                 .from('profiles')

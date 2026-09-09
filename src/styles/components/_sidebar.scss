@@ -26,7 +26,7 @@
         top: 0;
         left: 0;
         transform: translateX(-100%);
-        width: 250px !important; // Force expanded width on mobile
+        width: 250px !important;
 
         &--mobile-open {
             transform: translateX(0);
@@ -38,7 +38,7 @@
         align-items: center;
         justify-content: space-between;
         padding: 0 $space-6;
-        height: 48px; // Approximate header height alignment
+        height: 48px;
         margin-bottom: $space-6;
 
         &-brand {

@@ -140,7 +140,6 @@ export const StoryTypesManagement = () => {
         
         setLoading(true);
         try {
-            // 1. Delete all tickets that have this story_type_id first
             if (deleteTicketsByStoryType) {
                 await deleteTicketsByStoryType(id);
             } else {
@@ -152,7 +151,6 @@ export const StoryTypesManagement = () => {
                 if (ticketError) throw ticketError;
             }
 
-            // 2. Delete the story type
             const { error: storyTypeError } = await supabase
                 .from('story_types')
                 .delete()

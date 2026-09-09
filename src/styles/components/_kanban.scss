@@ -156,15 +156,15 @@
         padding: 12px 16px;
 
         .search-wrapper {
-            max-width: 100%; // Take full width on mobile
+            max-width: 100%;
         }
 
         .filter-wrapper {
-            width: 100%; // Force filter to new row
+            width: 100%; 
             justify-content: flex-end;
 
             .priority-select {
-                flex: 1; // Stretch select on mobile
+                flex: 1;
                 max-width: 200px;
             }
         }

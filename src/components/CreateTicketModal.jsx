@@ -18,7 +18,6 @@ export const CreateTicketModal = ({ onClose }) => {
     const [storyTypes, setStoryTypes] = useState([])
     const [validationError, setValidationError] = useState('')
 
-    // Fetch assignable users and story types
     useEffect(() => {
         const fetchData = async () => {
             const [profilesRes, storyTypesRes] = await Promise.all([

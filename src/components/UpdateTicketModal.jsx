@@ -12,13 +12,11 @@ export const UpdateTicketModal = ({ ticket, onClose }) => {
     const [assignedTo, setAssignedTo] = useState(ticket.assigned_to?.id || ticket.assigned_to || '')
     const [agents, setAgents] = useState([])
 
-    // Fetch assignable users for the dropdown
     useEffect(() => {
         const fetchAgents = async () => {
             const { data, error } = await supabase
                 .from('profiles')
                 .select('id, full_name')
-                // .in('role', ['agent', 'manager']) // Temporarily commented out to show all users
 
             if (error) {
                 console.error("Error fetching profiles:", error)
