@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Plus, Sun, Moon, CircleUserRound } from 'lucide-react'
+import { Plus, Sun, Moon, CircleUserRound, Menu } from 'lucide-react'
 import { AuthContext } from '../hooks/AuthContext'
 import { CreateTicketModal } from './CreateTicketModal'
 
-export const Header = () => {
+export const Header = ({ setIsMobileMenuOpen }) => {
     const { userProfile, userData } = useContext(AuthContext)
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark')
@@ -22,13 +22,22 @@ export const Header = () => {
     return (
         <>
             <header className="topbar">
-                <button
-                    className="btn btn--primary"
-                    onClick={() => setIsCreateModalOpen(true)}
-                >
-                    <Plus size={16} />
-                    Create Ticket
-                </button>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                    <button 
+                        className="btn btn--ghost btn--icon-only mobile-menu-btn" 
+                        onClick={() => setIsMobileMenuOpen(true)}
+                        aria-label="Open menu"
+                    >
+                        <Menu size={20} />
+                    </button>
+                    <button
+                        className="btn btn--primary"
+                        onClick={() => setIsCreateModalOpen(true)}
+                    >
+                        <Plus size={16} />
+                        Create Ticket
+                    </button>
+                </div>
 
                 <div className="topbar__actions">
                     <button className="btn btn--ghost btn--icon-only" onClick={toggleTheme} aria-label="Toggle theme">

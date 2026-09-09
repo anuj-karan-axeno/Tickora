@@ -17,7 +17,7 @@ export const TicketContextProvider = ({ children }) => {
 
             const { data, error } = await supabase
                 .from('tickets')
-                .select('*, created_by(id, full_name), assigned_to(id, full_name)')
+                .select('*, created_by(id, full_name), assigned_to(id, full_name), story_type_id(id, name, color_code)')
                 .order('created_at', { ascending: false });
 
             if (error) {
@@ -47,9 +47,10 @@ export const TicketContextProvider = ({ children }) => {
                     priority: formData.priority,
                     department: formData.department,
                     assigned_to: formData.assigned_to,
+                    story_type_id: formData.story_type_id,
                     created_by: userData?.id || null,
                 })
-                .select('*, created_by(id, full_name), assigned_to(id, full_name)')
+                .select('*, created_by(id, full_name), assigned_to(id, full_name), story_type_id(id, name, color_code)')
                 .single();
 
             if (error) {
@@ -75,7 +76,7 @@ export const TicketContextProvider = ({ children }) => {
                 .from('tickets')
                 .update(updates)
                 .eq('id', ticketId)
-                .select('*, created_by(id, full_name), assigned_to(id, full_name)')
+                .select('*, created_by(id, full_name), assigned_to(id, full_name), story_type_id(id, name, color_code)')
                 .single();
 
             if (error) {

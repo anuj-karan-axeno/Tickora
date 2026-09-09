@@ -32,7 +32,26 @@ export const TicketCard = ({ ticket }) => {
 
     return (
         <>
-            <div className="ticket-card" onClick={() => setIsUpdateModalOpen(true)}>
+            <div className="ticket-card" onClick={() => setIsUpdateModalOpen(true)} style={{ position: 'relative', overflow: 'hidden' }}>
+                {ticket.story_type_id && (
+                    <div style={{
+                        width: 'calc(100% + 28px)',
+                        marginLeft: '-14px',
+                        marginRight: '-14px',
+                        marginTop: '-12px',
+                        padding: '4px 14px',
+                        backgroundColor: `${ticket.story_type_id.color_code}20`,
+                        color: ticket.story_type_id.color_code,
+                        fontSize: '10px',
+                        fontWeight: 700,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px',
+                        borderBottom: `1px solid ${ticket.story_type_id.color_code}40`,
+                        marginBottom: '-2px' // offset the gap spacing
+                    }}>
+                        {ticket.story_type_id.name}
+                    </div>
+                )}
                 <div className="ticket-card__header">
                     <span className="ticket-card__id">TKT-{ticketIdStr}</span>
                     <div className="ticket-card__assignee" title={`Assigned to: ${assigneeName}`}>

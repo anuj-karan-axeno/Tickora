@@ -11,23 +11,26 @@ export const CreateTicketModal = ({ onClose }) => {
     const [priority, setPriority] = useState('medium')
     const [department, setDepartment] = useState('')
     const [assignedTo, setAssignedTo] = useState('')
+    const [storyTypeId, setStoryTypeId] = useState('')
     const [agents, setAgents] = useState([])
+    const [storyTypes, setStoryTypes] = useState([])
 
-    // Fetch assignable users for the dropdown
+    // Fetch assignable users and story types
     useEffect(() => {
-        const fetchAgents = async () => {
-            const { data, error } = await supabase
-                .from('profiles')
-                .select('id, full_name')
-                // .in('role', ['agent', 'manager']) // Temporarily commented out to show all users
+        const fetchData = async () => {
+            const [profilesRes, storyTypesRes] = await Promise.all([
+                supabase.from('profiles').select('id, full_name'),
+                supabase.from('story_types').select('id, name').order('name', { ascending: true })
+            ]);
 
-            if (error) {
-                console.error("Error fetching profiles:", error)
-            }
-            setAgents(data || [])
+            if (profilesRes.error) console.error("Error fetching profiles:", profilesRes.error);
+            if (storyTypesRes.error) console.error("Error fetching story types:", storyTypesRes.error);
+
+            setAgents(profilesRes.data || []);
+            setStoryTypes(storyTypesRes.data || []);
         }
 
-        fetchAgents()
+        fetchData()
     }, [])
 
     const handleSubmit = async (e) => {
@@ -39,6 +42,7 @@ export const CreateTicketModal = ({ onClose }) => {
             priority,
             department,
             assigned_to: assignedTo || null,
+            story_type_id: storyTypeId || null
         })
 
         onClose()
@@ -100,6 +104,23 @@ export const CreateTicketModal = ({ onClose }) => {
                                 value={department}
                                 onChange={(e) => setDepartment(e.target.value)}
                             />
+                        </div>
+
+                        <div className="field">
+                            <label className="field__label" htmlFor="storyType">Story Type</label>
+                            <select
+                                id="storyType"
+                                className="select"
+                                value={storyTypeId}
+                                onChange={(e) => setStoryTypeId(e.target.value)}
+                            >
+                                <option value="">No type</option>
+                                {storyTypes.map((type) => (
+                                    <option key={type.id} value={type.id}>
+                                        {type.name.charAt(0).toUpperCase() + type.name.slice(1)}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
                         <div className="field">

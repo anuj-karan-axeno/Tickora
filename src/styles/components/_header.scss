@@ -12,9 +12,15 @@
     box-sizing: border-box;
 
     &__actions {
-        display: flex;
-        align-items: center;
-        gap: $space-4;
+        @include flexCenter(row, flex-start, center);
+        gap: $space-3;
+    }
+}
+
+.mobile-menu-btn {
+    display: none !important;
+    @media (max-width: 768px) {
+        display: flex !important;
     }
 }
 
