@@ -150,24 +150,23 @@ export const UserManagement = () => {
 
         setDeleteLoading(user.id);
         try {
-            // 1. Unassign tickets assigned to this user
             await supabase
                 .from('tickets')
                 .update({ assigned_to: null })
                 .eq('assigned_to', user.id);
 
-            // 2. Set created_by to null
+        
             await supabase
                 .from('tickets')
                 .update({ created_by: null })
                 .eq('created_by', user.id);
 
-            // 3. Delete from Supabase Auth via RPC
+            
             const { error: rpcError } = await supabase.rpc('delete_user_by_admin', {
                 target_user_id: user.id
             });
 
-            // 4. If RPC function is not yet installed in Supabase or fails, delete from profiles table
+
             if (rpcError) {
                 console.warn("RPC delete_user_by_admin fallback:", rpcError.message);
                 const { error: profileDeleteError } = await supabase

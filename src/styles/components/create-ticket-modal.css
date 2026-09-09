@@ -1,0 +1,193 @@
+:root {
+  --primary-color: #dcc088;
+  --secondary-color: #1a1a1a;
+  --tertiary-color: #242424;
+  --neutral-color: #f5f1e8;
+  --border-color-1: rgba(220, 192, 136, 0.18);
+  --color-1: #a8a29a;
+  --color-2: #6b655c;
+  --color-3: #0a0a0a;
+  --color-4: #c0574a;
+  --color-5: #6fae7f;
+  --shadow-modal: 0 12px 32px rgba(0, 0, 0, 0.6);
+  --shadow-focus: 0 0 0 3px rgba(220, 192, 136, 0.18);
+  --surface-1: #242424;
+  --surface-hover: #2a2a2a;
+  --border-subtle: #333333;
+  --border-hover: #444444;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-tertiary: #7d8590;
+  --btn-border: #30363d;
+  --btn-hover: #30363d;
+  --btn-text: #c9d1d9;
+}
+
+[data-theme=light] {
+  --primary-color: #b59252;
+  --secondary-color: #ffffff;
+  --tertiary-color: #f9f9f9;
+  --neutral-color: #1a1a1a;
+  --border-color-1: rgba(0, 0, 0, 0.1);
+  --color-1: #555555;
+  --color-2: #888888;
+  --color-3: #f6f8fa;
+  --color-4: #e74c3c;
+  --color-5: #2ecc71;
+  --shadow-modal: 0 12px 32px rgba(0, 0, 0, 0.1);
+  --shadow-focus: 0 0 0 3px rgba(181, 146, 82, 0.2);
+  --surface-1: #ffffff;
+  --surface-hover: #f3f4f6;
+  --border-subtle: #d0d7de;
+  --border-hover: #babbbd;
+  --text-primary: #1F2328;
+  --text-secondary: #656d76;
+  --text-tertiary: #57606a;
+  --btn-border: #d0d7de;
+  --btn-hover: #f3f4f6;
+  --btn-text: #24292f;
+}
+
+.ticket-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  z-index: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.ticket-modal {
+  background-color: var(--secondary-color);
+  border: 1px solid var(--border-color-1);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  max-width: 460px;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+.ticket-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color-1);
+}
+.ticket-modal__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--neutral-color);
+}
+.ticket-modal__close {
+  color: var(--color-1);
+  cursor: pointer;
+}
+.ticket-modal__close:hover {
+  color: var(--neutral-color);
+}
+.ticket-modal__body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.ticket-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: row;
+  gap: 12px;
+  padding: 20px 24px;
+  border-top: 1px solid var(--border-color-1);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.field__label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-1);
+}
+.field__required {
+  color: #e74c3c;
+  margin-left: 3px;
+  font-weight: 700;
+}
+.field__error {
+  font-size: 0.75rem;
+  color: var(--color-4);
+}
+
+.input,
+.textarea,
+.select {
+  background-color: var(--color-3);
+  border: 1px solid var(--border-color-1);
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 0.875rem;
+  color: var(--neutral-color);
+  width: 100%;
+}
+.input:focus-visible,
+.textarea:focus-visible,
+.select:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(220, 192, 136, 0.18);
+}
+.input::-moz-placeholder, .textarea::-moz-placeholder, .select::-moz-placeholder {
+  color: var(--color-2);
+}
+.input::placeholder,
+.textarea::placeholder,
+.select::placeholder {
+  color: var(--color-2);
+}
+
+.textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+.btn--primary {
+  background-color: var(--primary-color);
+  color: var(--color-3);
+  font-weight: 600;
+}
+.btn--primary:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+.btn--primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn--secondary {
+  background-color: transparent;
+  color: var(--neutral-color);
+  border-color: var(--border-color-1);
+}
+.btn--secondary:hover {
+  background-color: var(--tertiary-color);
+}
+.btn--full {
+  width: 100%;
+}/*# sourceMappingURL=create-ticket-modal.css.map */

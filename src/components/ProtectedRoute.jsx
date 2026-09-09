@@ -5,7 +5,6 @@ import { AuthContext } from '../hooks/AuthContext';
 export const ProtectedRoute = ({ children }) => {
     const { userData, authLoading } = useContext(AuthContext);
 
-    // If still checking session, show a loader
     if (authLoading) {
         return <div className="loader-screen">Loading...</div>;
     }

@@ -14,7 +14,6 @@ export const KanbanBoard = () => {
         fetchTickets();
     }, []);
 
-    // Debounce search input
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedSearchTerm(searchTerm);
@@ -22,7 +21,6 @@ export const KanbanBoard = () => {
         return () => clearTimeout(handler);
     }, [searchTerm]);
 
-    // Group tickets by status. Default to 'todo' if no status exists.
     const columns = {
         todo: { title: 'TODO', tickets: [] },
         inProgress: { title: 'In-Progress', tickets: [] },
@@ -53,7 +51,6 @@ export const KanbanBoard = () => {
         } else if (status === 'closed') {
             columns.done.tickets.push(ticket);
         } else {
-            // Default fallback ('open')
             columns.todo.tickets.push(ticket);
         }
     });
