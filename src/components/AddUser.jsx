@@ -58,9 +58,9 @@ export const AddUser = () => {
     };
 
     return (
-        <div style={{ padding: '24px', maxWidth: '600px', margin: '0 auto' }}>
-            <div className="ticket-card" style={{ padding: '32px' }}>
-                <h2 style={{ color: '#dcc088', marginBottom: '24px' }}>Add New User</h2>
+        <div className="add-user-container">
+            <div className="ticket-card add-user-card">
+                <h2 className="add-user-card__title">Add New User</h2>
                 
                 <form onSubmit={handleSubmit}>
                     <div className="field">
@@ -114,18 +114,18 @@ export const AddUser = () => {
                     </div>
 
                     {successMsg && (
-                        <p style={{ color: '#7ed321', fontSize: '0.875rem', marginBottom: '16px' }}>
+                        <p className="form-message form-message--success">
                             {successMsg}
                         </p>
                     )}
 
                     {errorMsg && (
-                        <p style={{ color: '#e74c3c', fontSize: '0.875rem', marginBottom: '16px' }}>
+                        <p className="form-message form-message--error">
                             {errorMsg}
                         </p>
                     )}
 
-                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '32px' }}>
+                    <div className="form-actions--end">
                         <button type="submit" className="btn btn--primary" disabled={loading}>
                             {loading ? 'Adding User...' : 'Add User'}
                         </button>

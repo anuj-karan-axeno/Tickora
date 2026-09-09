@@ -5,14 +5,10 @@ import { UpdateTicketModal } from './UpdateTicketModal';
 
 const PriorityLabel = ({ priority }) => {
     const p = priority?.toLowerCase() || 'low';
-    let dotColor = '#7f8c8d';
-    if (p === 'critical') dotColor = '#e74c3c';
-    if (p === 'high') dotColor = '#f39c12';
-    if (p === 'medium') dotColor = '#3498db';
 
     return (
         <div className="ticket-card__priority-label">
-            <span className="priority-dot" style={{ backgroundColor: dotColor }}></span>
+            <span className={`priority-dot priority-dot--${p}`}></span>
             {p.charAt(0).toUpperCase() + p.slice(1)}
         </div>
     );
@@ -32,23 +28,16 @@ export const TicketCard = ({ ticket }) => {
 
     return (
         <>
-            <div className="ticket-card" onClick={() => setIsUpdateModalOpen(true)} style={{ position: 'relative', overflow: 'hidden' }}>
+            <div className="ticket-card" onClick={() => setIsUpdateModalOpen(true)}>
                 {ticket.story_type_id && (
-                    <div style={{
-                        width: 'calc(100% + 28px)',
-                        marginLeft: '-14px',
-                        marginRight: '-14px',
-                        marginTop: '-12px',
-                        padding: '4px 14px',
-                        backgroundColor: `${ticket.story_type_id.color_code}20`,
-                        color: ticket.story_type_id.color_code,
-                        fontSize: '10px',
-                        fontWeight: 700,
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.5px',
-                        borderBottom: `1px solid ${ticket.story_type_id.color_code}40`,
-                        marginBottom: '-2px' // offset the gap spacing
-                    }}>
+                    <div 
+                        className="ticket-card__story-banner"
+                        style={{
+                            '--story-color': ticket.story_type_id.color_code,
+                            '--story-bg': `${ticket.story_type_id.color_code}20`,
+                            '--story-border': `${ticket.story_type_id.color_code}40`
+                        }}
+                    >
                         {ticket.story_type_id.name}
                     </div>
                 )}

@@ -34,7 +34,7 @@ export const Sidebar = ({ activeTab, setActiveTab, isMobileMenuOpen, setIsMobile
 
             <aside className={`sidebar ${isCollapsed ? 'sidebar--collapsed' : 'sidebar--expanded'} ${isMobileMenuOpen ? 'sidebar--mobile-open' : ''}`}>
                 <div className="sidebar__logo">
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div className="sidebar__logo-brand">
                         <span className="icon"><Ticket size={28} strokeWidth={2.5} /></span>
                         <span className="label">Tickora</span>
                     </div>

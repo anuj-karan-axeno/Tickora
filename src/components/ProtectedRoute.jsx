@@ -7,7 +7,7 @@ export const ProtectedRoute = ({ children }) => {
 
     // If still checking session, show a loader
     if (authLoading) {
-        return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'var(--text-primary)', backgroundColor: 'var(--color-3)' }}>Loading...</div>;
+        return <div className="loader-screen">Loading...</div>;
     }
 
     if (!userData) {

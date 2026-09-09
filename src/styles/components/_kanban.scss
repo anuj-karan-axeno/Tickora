@@ -1,6 +1,13 @@
 @use '../abstract/variables' as *;
 @use '../abstract/mixins' as *;
 
+.kanban-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
 .kanban-board {
     display: flex;
     gap: $space-6;
@@ -27,6 +34,12 @@
         border-bottom: 2px solid $border-color-1;
         background-color: $secondary-color;
         color: $neutral-color;
+    }
+
+    &__count {
+        margin-left: 8px;
+        font-size: 12px;
+        color: var(--text-secondary);
     }
 
     &__body {

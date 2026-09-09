@@ -22,7 +22,7 @@ export const Header = ({ setIsMobileMenuOpen }) => {
     return (
         <>
             <header className="topbar">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                <div className="topbar__left">
                     <button 
                         className="btn btn--ghost btn--icon-only mobile-menu-btn" 
                         onClick={() => setIsMobileMenuOpen(true)}
@@ -46,7 +46,7 @@ export const Header = ({ setIsMobileMenuOpen }) => {
 
                     <div className="user-chip">
                         <CircleUserRound size={22} color="var(--primary-color, #dcc088)" />
-                        <span className="user-chip__name" style={{ fontWeight: 600 }}>
+                        <span className="user-chip__name">
                             {displayName}
                         </span>
                     </div>

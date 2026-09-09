@@ -40,8 +40,7 @@ export const HomePage = () => {
                     A premium, minimalist ticket management system designed for teams that value focus, speed, and beautiful design.
                 </p>
                 <button 
-                    className="btn btn--primary" 
-                    style={{ fontSize: '16px', padding: '12px 32px', display: 'flex', alignItems: 'center', gap: '8px' }}
+                    className="btn btn--primary homepage__hero-cta" 
                     onClick={handleCtaClick}
                 >
                     {userData ? 'Enter Workspace' : 'Get Started'}

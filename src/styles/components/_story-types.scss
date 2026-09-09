@@ -1,0 +1,60 @@
+@use '../abstract/variables' as *;
+
+.story-types-container {
+    padding: 24px;
+    width: 100%;
+}
+
+.color-picker-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    &__input {
+        height: 36px;
+        width: 48px;
+        padding: 0;
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+    }
+
+    &__text {
+        flex: 1;
+    }
+}
+
+.color-swatch-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &__dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: var(--swatch-color, #ccc);
+    }
+
+    &__hex {
+        font-family: monospace;
+    }
+}
+
+.btn--danger {
+    color: #e74c3c !important;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.table__cell-capitalize-fw500 {
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.ticket-modal__footer--spaced {
+    margin-top: 24px;
+}
+

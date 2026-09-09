@@ -11,6 +11,12 @@
     width: 100%;
     box-sizing: border-box;
 
+    &__left {
+        display: flex;
+        align-items: center;
+        gap: $space-4;
+    }
+
     &__actions {
         @include flexCenter(row, flex-start, center);
         gap: $space-3;
@@ -35,7 +41,7 @@
 
     &__name {
         font-size: 0.875rem;
-        font-weight: 500;
+        font-weight: 600;
         color: $neutral-color;
     }
 }

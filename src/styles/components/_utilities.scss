@@ -1,0 +1,18 @@
+@use '../abstract/variables' as *;
+
+.loader-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: var(--text-primary);
+    background-color: var(--color-3);
+
+    &--inline {
+        height: auto;
+        padding: 24px;
+        background-color: transparent;
+        color: var(--text-secondary);
+        text-align: center;
+    }
+}

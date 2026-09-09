@@ -96,6 +96,31 @@ export const TicketContextProvider = ({ children }) => {
         }
     };
 
+    const deleteTicketsByStoryType = async (storyTypeId) => {
+        try {
+            const { error } = await supabase
+                .from('tickets')
+                .delete()
+                .eq('story_type_id', storyTypeId);
+
+            if (error) {
+                console.error("Supabase delete tickets by story_type error:", error);
+                throw error;
+            }
+
+            setTicketData((prev) =>
+                prev.filter((ticket) => {
+                    const id = ticket.story_type_id?.id || ticket.story_type_id;
+                    return id !== storyTypeId;
+                })
+            );
+        } catch (err) {
+            console.error(err);
+            setError('Something went wrong while deleting associated tickets');
+            throw err;
+        }
+    };
+
     return (
         <TicketContext.Provider
             value={{
@@ -105,6 +130,7 @@ export const TicketContextProvider = ({ children }) => {
                 fetchTickets,
                 createTicket,
                 updateTicket,
+                deleteTicketsByStoryType,
             }}
         >
             {children}

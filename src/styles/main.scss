@@ -6,6 +6,9 @@
 @use './components/ticket-card';
 @use './components/sidebar';
 @use './components/table';
+@use './components/utilities';
+@use './components/user-management';
+@use './components/story-types';
 @use './pages/homepage';
 
 .dashboard-layout {

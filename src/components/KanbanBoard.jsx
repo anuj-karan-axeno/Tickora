@@ -59,11 +59,11 @@ export const KanbanBoard = () => {
     });
 
     if (loading && (!ticketData || ticketData.length === 0)) {
-        return <div style={{ padding: '24px', color: 'var(--text-primary)' }}>Loading tickets...</div>;
+        return <div className="loader-screen loader-screen--inline">Loading tickets...</div>;
     }
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
+        <div className="kanban-layout">
             {/* Toolbar */}
             <div className="kanban-toolbar">
                 <div className="search-wrapper">
@@ -96,7 +96,7 @@ export const KanbanBoard = () => {
                 <div className="kanban-column kanban-column--todo">
                     <div className="kanban-column__header">
                         {columns.todo.title}
-                        <span style={{ marginLeft: '8px', fontSize: '12px', color: 'var(--text-secondary)' }}>
+                        <span className="kanban-column__count">
                             ({columns.todo.tickets.length})
                         </span>
                     </div>
@@ -110,7 +110,7 @@ export const KanbanBoard = () => {
                 <div className="kanban-column kanban-column--in-progress">
                     <div className="kanban-column__header">
                         {columns.inProgress.title}
-                        <span style={{ marginLeft: '8px', fontSize: '12px', color: 'var(--text-secondary)' }}>
+                        <span className="kanban-column__count">
                             ({columns.inProgress.tickets.length})
                         </span>
                     </div>
@@ -124,7 +124,7 @@ export const KanbanBoard = () => {
                 <div className="kanban-column kanban-column--done">
                     <div className="kanban-column__header">
                         {columns.done.title}
-                        <span style={{ marginLeft: '8px', fontSize: '12px', color: 'var(--text-secondary)' }}>
+                        <span className="kanban-column__count">
                             ({columns.done.tickets.length})
                         </span>
                     </div>

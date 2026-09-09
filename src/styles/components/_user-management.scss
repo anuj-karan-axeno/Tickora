@@ -1,0 +1,93 @@
+@use '../abstract/variables' as *;
+
+.user-management {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    &__add-user-wrapper {
+        margin-bottom: 24px;
+    }
+
+    &__back-btn {
+        margin-bottom: 24px;
+    }
+}
+
+.add-user-container {
+    padding: 24px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.add-user-card {
+    padding: 32px;
+
+    &__title {
+        color: $primary-color;
+        margin-bottom: 24px;
+    }
+}
+
+.form-message {
+    font-size: 0.875rem;
+    margin-bottom: 16px;
+
+    &--success {
+        color: #7ed321;
+    }
+
+    &--error {
+        color: #e74c3c;
+    }
+}
+
+.form-actions--end {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 32px;
+}
+
+.table {
+    &__cell-fw-500 {
+        font-weight: 500;
+    }
+
+    &__cell-muted {
+        color: var(--text-secondary);
+    }
+
+    &__empty-state {
+        text-align: center;
+        color: var(--text-secondary);
+        padding: 24px;
+    }
+}
+
+.role-badge {
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+
+    &--admin {
+        background-color: rgba(231, 76, 60, 0.15);
+        color: #e74c3c;
+    }
+
+    &--manager {
+        background-color: rgba(46, 204, 113, 0.15);
+        color: #2ecc71;
+    }
+
+    &--agent {
+        background-color: rgba(52, 152, 219, 0.15);
+        color: #3498db;
+    }
+
+    &--user {
+        background-color: rgba(149, 165, 166, 0.15);
+        color: #95a5a6;
+    }
+}

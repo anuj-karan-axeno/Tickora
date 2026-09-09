@@ -113,11 +113,10 @@ export const UserManagement = () => {
 
     if (showAddUser) {
         return (
-            <div style={{ padding: '24px' }}>
+            <div className="user-management">
                 <button 
-                    className="btn btn--secondary" 
+                    className="btn btn--secondary user-management__back-btn" 
                     onClick={() => { setShowAddUser(false); fetchUsers(); }}
-                    style={{ marginBottom: '24px' }}
                 >
                     ← Back to Users
                 </button>
@@ -127,17 +126,16 @@ export const UserManagement = () => {
     }
 
     return (
-        <div style={{ padding: '24px', maxWidth: '1200px', margin: '0 auto' }}>
-            <div className="table-container">
-                <div className="table-header">
-                    <h2>User Management</h2>
-                    <button className="btn btn--primary" onClick={() => setShowAddUser(true)}>
-                        + Add New User
-                    </button>
-                </div>
+        <div className="user-management">
+            <div className="user-management__add-user-wrapper">
+                <button className="btn btn--primary" onClick={() => setShowAddUser(true)}>
+                    + Add New User
+                </button>
+            </div>
 
+            <div className="table-container">
                 {loading ? (
-                    <div style={{ padding: '24px', textAlign: 'center', color: '#8b949e' }}>Loading users...</div>
+                    <div className="loader-screen loader-screen--inline">Loading users...</div>
                 ) : (
                     <table className="data-table">
                         <thead>
@@ -152,35 +150,36 @@ export const UserManagement = () => {
                         <tbody>
                             {users.map(user => (
                                 <tr key={user.id}>
-                                    <td style={{ fontWeight: 500 }}>{user.full_name || 'N/A'}</td>
-                                    <td style={{ color: '#8b949e' }}>{user.email}</td>
+                                    <td className="table__cell-fw-500">{user.full_name || 'N/A'}</td>
+                                    <td className="table__cell-muted">{user.email}</td>
                                     <td>{user.department || '-'}</td>
                                     <td>
-                                        <span style={{ 
-                                            padding: '2px 8px', 
-                                            borderRadius: '12px', 
-                                            fontSize: '12px',
-                                            backgroundColor: user.role === 'admin' ? 'rgba(231, 76, 60, 0.2)' : 'rgba(52, 152, 219, 0.2)',
-                                            color: user.role === 'admin' ? '#ff7675' : '#54a0ff',
-                                            textTransform: 'uppercase',
-                                            fontWeight: 'bold'
-                                        }}>
-                                            {user.role}
-                                        </span>
+                                        <select
+                                            className="select"
+                                            value={user.role}
+                                            onChange={(e) => updateRole(user.id, e.target.value)}
+                                            disabled={updateLoading === user.id}
+                                        >
+                                            <option value="admin">Admin</option>
+                                            <option value="manager">Manager</option>
+                                            <option value="agent">Agent</option>
+                                            <option value="member">Member</option>
+                                        </select>
                                     </td>
                                     <td>
-                                        <button 
-                                            className="ticket-btn"
-                                            onClick={() => setEditingUser(user)}
+                                        <button
+                                            className="btn btn--ghost"
+                                            onClick={() => handleDeleteUser(user.id)}
+                                            disabled={deleteLoading === user.id}
                                         >
-                                            Edit
+                                            <Trash2 size={16} />
                                         </button>
                                     </td>
                                 </tr>
                             ))}
                             {users.length === 0 && (
                                 <tr>
-                                    <td colSpan="5" style={{ textAlign: 'center', color: '#8b949e', padding: '24px' }}>
+                                    <td colSpan="5" className="table__empty-state">
                                         No users found.
                                     </td>
                                 </tr>
@@ -189,7 +188,6 @@ export const UserManagement = () => {
                     </table>
                 )}
             </div>
-
             {editingUser && (
                 <EditUserModal 
                     user={editingUser} 

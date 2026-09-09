@@ -12,10 +12,28 @@
     gap: 10px;
     cursor: pointer;
     transition: all 0.15s ease;
+    position: relative;
+    overflow: hidden;
 
     &:hover {
         background-color: var(--surface-hover);
         border-color: var(--border-hover);
+    }
+
+    &__story-banner {
+        width: calc(100% + 28px);
+        margin-left: -14px;
+        margin-right: -14px;
+        margin-top: -12px;
+        padding: 4px 14px;
+        background-color: var(--story-bg, rgba(255, 255, 255, 0.05));
+        color: var(--story-color, inherit);
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 1px solid var(--story-border, transparent);
+        margin-bottom: -2px;
     }
 
     &__header {
@@ -88,6 +106,23 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
+            background-color: #7f8c8d;
+
+            &--critical {
+                background-color: #e74c3c;
+            }
+
+            &--high {
+                background-color: #f39c12;
+            }
+
+            &--medium {
+                background-color: #3498db;
+            }
+
+            &--low {
+                background-color: #7f8c8d;
+            }
         }
     }
 }

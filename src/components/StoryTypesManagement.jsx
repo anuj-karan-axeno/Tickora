@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { supabase } from '../utils/supabase';
+import { TicketContext } from '../hooks/TicketContext';
 
 const StoryTypeModal = ({ storyType, onClose, onRefresh }) => {
     const isEdit = !!storyType;
@@ -79,27 +80,24 @@ const StoryTypeModal = ({ storyType, onClose, onRefresh }) => {
 
                     <div className="field">
                         <label className="field__label">Color Code</label>
-                        <div style={{ display: 'flex', gap: '8px' }}>
+                        <div className="color-picker-group">
                             <input 
                                 type="color" 
                                 value={colorCode} 
                                 onChange={(e) => setColorCode(e.target.value)}
-                                style={{ height: '36px', width: '48px', padding: '0', cursor: 'pointer', backgroundColor: 'transparent', border: 'none' }}
+                                className="color-picker-group__input"
                             />
                             <input 
                                 type="text" 
-                                className="input" 
+                                className="input color-picker-group__text" 
                                 value={colorCode} 
                                 onChange={(e) => setColorCode(e.target.value)} 
                                 placeholder="#HexColor"
-                                style={{ flex: 1 }}
                             />
                         </div>
                     </div>
 
-
-
-                    <div className="ticket-modal__footer" style={{ marginTop: '24px' }}>
+                    <div className="ticket-modal__footer ticket-modal__footer--spaced">
                         <button type="button" className="btn btn--secondary" onClick={onClose}>Cancel</button>
                         <button type="submit" className="btn btn--primary" disabled={loading}>
                             {loading ? 'Saving...' : 'Save Story Type'}
@@ -112,6 +110,7 @@ const StoryTypeModal = ({ storyType, onClose, onRefresh }) => {
 };
 
 export const StoryTypesManagement = () => {
+    const { deleteTicketsByStoryType, fetchTickets } = useContext(TicketContext);
     const [storyTypes, setStoryTypes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
@@ -137,27 +136,51 @@ export const StoryTypesManagement = () => {
     }, []);
 
     const handleDelete = async (id) => {
-        if (!window.confirm("Are you sure you want to delete this story type? This may affect existing tickets.")) return;
+        if (!window.confirm("Are you sure you want to delete this story type? All tickets associated with this story type will also be permanently deleted.")) return;
         
-        const { error } = await supabase
-            .from('story_types')
-            .delete()
-            .eq('id', id);
+        setLoading(true);
+        try {
+            // 1. Delete all tickets that have this story_type_id first
+            if (deleteTicketsByStoryType) {
+                await deleteTicketsByStoryType(id);
+            } else {
+                const { error: ticketError } = await supabase
+                    .from('tickets')
+                    .delete()
+                    .eq('story_type_id', id);
 
-        if (error) {
-            console.error("Error deleting story type", error);
-            alert("Error deleting story type: " + error.message);
-        } else {
-            fetchStoryTypes();
+                if (ticketError) throw ticketError;
+            }
+
+            // 2. Delete the story type
+            const { error: storyTypeError } = await supabase
+                .from('story_types')
+                .delete()
+                .eq('id', id);
+
+            if (storyTypeError) {
+                console.error("Error deleting story type", storyTypeError);
+                alert("Error deleting story type: " + storyTypeError.message);
+            } else {
+                fetchStoryTypes();
+                if (fetchTickets) {
+                    fetchTickets();
+                }
+            }
+        } catch (err) {
+            console.error("Error deleting story type and associated tickets:", err);
+            alert("Error: " + err.message);
+        } finally {
+            setLoading(false);
         }
     };
 
     if (loading && storyTypes.length === 0) {
-        return <div style={{ padding: '24px', color: 'var(--text-primary)' }}>Loading story types...</div>;
+        return <div className="loader-screen loader-screen--inline">Loading story types...</div>;
     }
 
     return (
-        <div style={{ padding: '24px', width: '100%' }}>
+        <div className="story-types-container">
             <div className="table-header">
                 <h2>Story Types</h2>
                 <button 
@@ -184,12 +207,15 @@ export const StoryTypesManagement = () => {
                     <tbody>
                         {storyTypes.map(st => (
                             <tr key={st.id}>
-                                <td style={{ fontWeight: 500, textTransform: 'capitalize' }}>{st.name}</td>
-                                <td style={{ color: 'var(--text-secondary)' }}>{st.description}</td>
+                                <td className="table__cell-capitalize-fw500">{st.name}</td>
+                                <td className="table__cell-muted">{st.description}</td>
                                 <td>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                        <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: st.color_code }}></div>
-                                        <span style={{ fontFamily: 'monospace' }}>{st.color_code}</span>
+                                    <div className="color-swatch-badge">
+                                        <div 
+                                            className="color-swatch-badge__dot" 
+                                            style={{ '--swatch-color': st.color_code }}
+                                        />
+                                        <span className="color-swatch-badge__hex">{st.color_code}</span>
                                     </div>
                                 </td>
 
@@ -205,9 +231,8 @@ export const StoryTypesManagement = () => {
                                             Edit
                                         </button>
                                         <button 
-                                            className="btn btn--ghost"
+                                            className="btn btn--ghost btn--danger"
                                             onClick={() => handleDelete(st.id)}
-                                            style={{ color: '#e74c3c' }}
                                         >
                                             Delete
                                         </button>
@@ -218,7 +243,7 @@ export const StoryTypesManagement = () => {
                     </tbody>
                 </table>
                 {storyTypes.length === 0 && (
-                    <div style={{ padding: '24px', textAlign: 'center', color: 'var(--text-secondary)' }}>
+                    <div className="table__empty-state">
                         No story types found.
                     </div>
                 )}
