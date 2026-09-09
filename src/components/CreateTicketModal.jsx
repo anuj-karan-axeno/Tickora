@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { X } from 'lucide-react'
 import { TicketContext } from '../hooks/TicketContext'
+import { AuthContext } from '../hooks/AuthContext'
 import { supabase } from '../utils/supabase'
 import '../styles/components/create-ticket-modal.scss'
 
 export const CreateTicketModal = ({ onClose }) => {
     const { createTicket, loading, error } = useContext(TicketContext)
+    const { userData } = useContext(AuthContext)
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [priority, setPriority] = useState('medium')
@@ -26,12 +28,17 @@ export const CreateTicketModal = ({ onClose }) => {
             if (profilesRes.error) console.error("Error fetching profiles:", profilesRes.error);
             if (storyTypesRes.error) console.error("Error fetching story types:", storyTypesRes.error);
 
-            setAgents(profilesRes.data || []);
+            const fetchedProfiles = profilesRes.data || [];
+            const filteredProfiles = userData?.id 
+                ? fetchedProfiles.filter(agent => agent.id !== userData.id)
+                : fetchedProfiles;
+
+            setAgents(filteredProfiles);
             setStoryTypes(storyTypesRes.data || []);
         }
 
         fetchData()
-    }, [])
+    }, [userData])
 
     const handleSubmit = async (e) => {
         e.preventDefault()

@@ -1,10 +1,18 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../hooks/AuthContext'
 
 export const Login = () => {
-    const { loginUser, loading, error } = useContext(AuthContext)
+    const { loginUser, loading, error, userData, authLoading } = useContext(AuthContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (userData && !authLoading) {
+            navigate('/dashboard', { replace: true })
+        }
+    }, [userData, authLoading, navigate])
 
     const onSubmitHandler = (e) => {
         e.preventDefault()
