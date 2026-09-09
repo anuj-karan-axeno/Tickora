@@ -6,6 +6,7 @@
 @use './components/ticket-card';
 @use './components/sidebar';
 @use './components/table';
+@use './pages/homepage';
 
 .dashboard-layout {
     display: flex;

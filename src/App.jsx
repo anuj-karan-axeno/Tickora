@@ -5,6 +5,7 @@ import { AuthContextProvider } from "./hooks/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { Header } from "./components/header";
 import Dashboard from "./page/Dashboard";
+import HomePage from "./page/HomePage";
 import { TicketContextProvider } from "./hooks/TicketContext";
 import './styles/main.scss'
 
@@ -20,7 +21,7 @@ function App() {
                 <Dashboard />
               </ProtectedRoute>
             } />
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/" element={<HomePage />} />
           </Routes>
         </TicketContextProvider>
       </AuthContextProvider>
