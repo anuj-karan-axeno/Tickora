@@ -24,7 +24,6 @@ export const Sidebar = ({ activeTab, setActiveTab, isMobileMenuOpen, setIsMobile
 
     return (
         <>
-            {/* Mobile overlay backdrop */}
             {isMobileMenuOpen && (
                 <div 
                     className="sidebar-overlay" 
@@ -47,7 +46,7 @@ export const Sidebar = ({ activeTab, setActiveTab, isMobileMenuOpen, setIsMobile
                     </button>
                 </div>
 
-                {/* Desktop Toggle */}
+               
                 <button 
                     className="sidebar__toggle sidebar__toggle--desktop" 
                     onClick={() => setIsCollapsed(!isCollapsed)}

@@ -61,7 +61,7 @@ export const KanbanBoard = () => {
 
     return (
         <div className="kanban-layout">
-            {/* Toolbar */}
+           
             <div className="kanban-toolbar">
                 <div className="search-wrapper">
                     <Search size={16} className="search-icon" />
